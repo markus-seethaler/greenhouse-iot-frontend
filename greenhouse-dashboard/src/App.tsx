@@ -4,6 +4,8 @@ import Grid from '@mui/material/Grid2';
 import { Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import TemperatureCard from './components/TemperatureCard';
+import HumidityCard from './components/HumidityCard';
+import SoilMoistureCard from './components/SoilMoistureCard';
 
 // Create a theme with green colors to match the greenhouse concept
 const theme = createTheme({
@@ -31,10 +33,10 @@ function App() {
             <TemperatureCard />
           </Grid>
           <Grid size={{xs:12, sm:6, md:4}}>
-            <TemperatureCard />
+            <HumidityCard />
           </Grid>
           <Grid size={{xs:12, sm:6, md:4}}>
-            <TemperatureCard />
+            <SoilMoistureCard />
           </Grid>
         </Grid>
       </Box>
