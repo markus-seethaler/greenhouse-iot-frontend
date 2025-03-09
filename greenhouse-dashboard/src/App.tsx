@@ -1,42 +1,53 @@
-// src/App.tsx
-// Import the Grid component correctly
-import Grid from '@mui/material/Grid2';
-import { Box } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import TemperatureCard from './components/TemperatureCard';
-import HumidityCard from './components/HumidityCard';
-import SoilMoistureCard from './components/SoilMoistureCard';
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import Grid from '@mui/material/Grid2'; // Using Grid2 as in your example
+import { createTheme } from '@mui/material/styles';
+import SensorCard from './components/GenericSensorCard';
 
-// Create a theme with green colors to match the greenhouse concept
+// Create theme
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2e7d32', // Dark green
+      main: '#2e7d32', // Green shade for plant theme
     },
     secondary: {
-      main: '#81c784', // Light green
+      main: '#558b2f',
     },
     background: {
       default: '#f5f5f5',
-    },
-  },
+    }
+  }
 });
-
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
+      <CssBaseline />
+      <Box sx={{
+        flexGrow: 1,
+        padding: 2,
+        minHeight: '100vh'
+      }}>
+        {/* Air sensors at the top */}
         <Grid container spacing={2}>
-          {/* Full width on mobile (xs), half width on tablets (sm), one-third on desktop (md) */}
-          <Grid size={{xs:12, sm:6, md:4}}>
-            <TemperatureCard />
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <SensorCard
+              sensorType="temperature"
+              title="Air Temperature"
+              color="#1565c0" // Blue for temperature
+            />
           </Grid>
-          <Grid size={{xs:12, sm:6, md:4}}>
-            <HumidityCard />
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <SensorCard
+              sensorType="humidity"
+              title="Air Humidity"
+              color="#0097a7" // Cyan for humidity
+            />
           </Grid>
-          <Grid size={{xs:12, sm:6, md:4}}>
-            <SoilMoistureCard />
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+            <SensorCard
+              sensorType="soil"
+              title="Soil Humidity"
+            />
           </Grid>
         </Grid>
       </Box>
@@ -45,4 +56,3 @@ function App() {
 }
 
 export default App;
-

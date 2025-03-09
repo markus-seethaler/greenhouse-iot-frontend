@@ -12,9 +12,9 @@ interface SensorCardProps {
   color?: string;    // Optional card accent color
 }
 
-const SensorCard: React.FC<SensorCardProps> = ({ 
-  sensorType, 
-  sensorId = 'default', 
+const SensorCard: React.FC<SensorCardProps> = ({
+  sensorType,
+  sensorId = 'default',
   title,
   color = '#1976d2' // Default MUI primary color
 }) => {
@@ -27,15 +27,15 @@ const SensorCard: React.FC<SensorCardProps> = ({
   // Determine display title if not provided
   const displayTitle = title || (
     sensorType === 'temperature' ? 'Air Temperature' :
-    sensorType === 'humidity' ? 'Air Humidity' :
-    `Soil Moisture ${sensorId !== 'default' ? sensorId : ''}`
+      sensorType === 'humidity' ? 'Air Humidity' :
+        `Soil Moisture ${sensorId !== 'default' ? sensorId : ''}`
   );
 
   // Determine unit based on sensor type
-  const displayUnit = 
+  const displayUnit =
     sensorType === 'temperature' ? '°C' :
-    sensorType === 'humidity' ? '%' :
-    '%';
+      sensorType === 'humidity' ? '%' :
+        '%';
 
   useEffect(() => {
     // Create a query to get the most recent reading
@@ -77,21 +77,14 @@ const SensorCard: React.FC<SensorCardProps> = ({
             sensorValue = data.sensors.air.humidity.value;
             sensorUnit = data.sensors.air.humidity.unit || '%';
           } else if (sensorType === 'soil' && data.sensors.soil) {
-            // Handle specific soil sensor or default
-            if (sensorId !== 'default' && data.sensors.soil[`sensor_${sensorId}`]) {
-              sensorValue = data.sensors.soil[`sensor_${sensorId}`].value;
-              sensorUnit = data.sensors.soil[`sensor_${sensorId}`].unit || '%';
-            } else if (data.sensors.soil.moisture) {
-              // Backward compatibility with old data structure
-              sensorValue = data.sensors.soil.moisture.value;
-              sensorUnit = data.sensors.soil.moisture.unit || '%';
-            }
+            sensorValue = data.sensors.soil.moisture.value;
+            sensorUnit = data.sensors.soil.moisture.unit || '%';
           }
 
           if (sensorValue !== null) {
             setValue(sensorValue);
             setUnit(sensorUnit);
-            
+
             // Convert Firestore timestamp to formatted string
             if (data.timestamp) {
               const date = convertTimestamp(data.timestamp);
@@ -100,7 +93,7 @@ const SensorCard: React.FC<SensorCardProps> = ({
           } else {
             setError(`No ${sensorType} data found`);
           }
-          
+
           setLoading(false);
         } catch (err) {
           console.error('Error parsing data:', err);
@@ -120,9 +113,9 @@ const SensorCard: React.FC<SensorCardProps> = ({
   }, [sensorType, sensorId]);
 
   return (
-    <Card sx={{ 
-      minWidth: 275, 
-      height: '100%', 
+    <Card sx={{
+      minWidth: 275,
+      height: '100%',
       display: 'flex',
       flexDirection: 'column',
       borderTop: `4px solid ${color}`
